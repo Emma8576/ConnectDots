@@ -38,6 +38,7 @@ public class Cliente extends JFrame implements ActionListener {
 
     // Definición de las variables contenidas en la interfaz
     private JLabel label1;
+    private JPanel gamePanel;
     private JLabel label2;
     private JLabel label3;
     private JLabel nickname;
@@ -97,6 +98,12 @@ public class Cliente extends JFrame implements ActionListener {
         add(boton2);
         boton2.addActionListener(this);
 
+        //Se crea el panel para el juego
+        gamePanel = new JPanel();
+        gamePanel.setBounds(0,40,800,510);
+        gamePanel.setBackground(Color.WHITE);
+        add(gamePanel);
+
         /* Se crea etiqueta encabezado */
         label1 = new JLabel("Connect Dots");
         label1.setBounds(0, 0, 800, 40);
@@ -124,7 +131,47 @@ public class Cliente extends JFrame implements ActionListener {
             // Si el evento proviene del botón1, se cierra la aplicación.
             System.exit(0);
         }
-        if (evento.getSource() == boton2) {              
+        if (evento.getSource() == boton2) {   
+            
+            //Ocultar los elemenetos de la pantalla principal
+            label2.setVisible(false);
+            boton1.setVisible(false);
+            boton2.setVisible(false);
+
+            //Se crea el contenido para la pantalla de juego
+            JPanel gameContent = new JPanel();
+
+            //Agregar botón de salida
+            Font font = new Font("Arial", Font.BOLD, 30);
+            JButton backButton = new JButton("Back");
+            backButton.setBounds(0, 15, 200, 40);
+            backButton.setFont(font);
+            backButton.setFocusPainted(false);
+            add(backButton);
+            backButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    // Se muestran los elementos del menu principal
+                    label2.setVisible(true);
+                    boton1.setVisible(true);
+                    boton2.setVisible(true);
+
+                    gamePanel.removeAll();
+
+                    revalidate();
+                    repaint();
+                }
+            });
+
+            //Se agrea contenido a la nueva pantalla
+            gameContent.add(backButton);
+
+            //Se agrega el panel de contenido del juego
+            gamePanel.add(gameContent);
+
+
+            //Actualizar interfaz
+            revalidate();
+            repaint();
     }
     
 }
