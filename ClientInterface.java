@@ -1,6 +1,4 @@
 
-//Que lindoooooooooooooooooooooo
-
 /**
  * Instituto tecnológico de Costa Rica
  * Curso: ALgoritmos y Estructura de Datos
