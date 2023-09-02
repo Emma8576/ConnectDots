@@ -43,6 +43,15 @@ public class InterfaceClient extends JFrame implements ActionListener {
         if (e.getSource() == close) {
             System.exit(0);
         }
+        if (e.getSource() == play) {
+            dispose();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new InterfaceClient_next();
+
+                }
+            });
+        }
     }
 
     public static void main(String args[]) {
