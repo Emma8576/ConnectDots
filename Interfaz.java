@@ -15,8 +15,6 @@
  */
 import javax.swing.*;
 
-import javafx.scene.image.Image;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Insets;
@@ -80,7 +78,7 @@ public class Interfaz extends JFrame implements ActionListener {
         add(nickname);
 
         // Se crea Botón de cerrar
-    
+
         boton1 = new JButton("Exit");
         boton1.setBounds(300, 270, 200, 40);
         boton1.setFont(font);
@@ -98,9 +96,9 @@ public class Interfaz extends JFrame implements ActionListener {
         add(boton2);
         boton2.addActionListener(this);
 
-        //Se crea el panel para el juego
+        // Se crea el panel para el juego
         gamePanel = new JPanel();
-        gamePanel.setBounds(0,40,800,510);
+        gamePanel.setBounds(0, 40, 800, 510);
         gamePanel.setBackground(Color.WHITE);
         add(gamePanel);
 
@@ -125,23 +123,22 @@ public class Interfaz extends JFrame implements ActionListener {
         add(label2);
     }
 
-
     public void actionPerformed(ActionEvent evento) {
         if (evento.getSource() == boton1) {
             // Si el evento proviene del botón1, se cierra la aplicación.
             System.exit(0);
         }
-        if (evento.getSource() == boton2) {   
-            
-            //Ocultar los elemenetos de la pantalla principal
+        if (evento.getSource() == boton2) {
+
+            // Ocultar los elemenetos de la pantalla principal
             label2.setVisible(false);
             boton1.setVisible(false);
             boton2.setVisible(false);
 
-            //Se crea el contenido para la pantalla de juego
+            // Se crea el contenido para la pantalla de juego
             JPanel gameContent = new JPanel();
 
-            //Agregar botón de salida
+            // Agregar botón de salida
             Font font = new Font("Arial", Font.BOLD, 30);
             JButton backButton = new JButton("Back");
             backButton.setBounds(0, 15, 200, 40);
@@ -162,26 +159,37 @@ public class Interfaz extends JFrame implements ActionListener {
                 }
             });
 
-            //Se agrea contenido a la nueva pantalla
+            // Se agrea contenido a la nueva pantalla
             gameContent.add(backButton);
 
-            //Se agrega el panel de contenido del juego
+            // Se agrega el panel de contenido del juego
             gamePanel.add(gameContent);
 
-
-            //Actualizar interfaz
+            // Actualizar interfaz
             revalidate();
             repaint();
+        }
+
     }
+<<<<<<<< HEAD:Interfaz.java
     
 }
  public static void main(String args[]) {
         Interfaz interface1 = new Interfaz();
         interface1.setBounds(0, 0, 800, 600);   //tamaño de interfaz
+========
+
+    public static void main(String args[]) {
+        Cliente interface1 = new Cliente();
+        interface1.setBounds(0, 0, 800, 600); // tamaño de interfaz
+>>>>>>>> 18a808a929f8b87005ad13e8c274e5fd5ebfd88b:ClientInterface.java
         interface1.setVisible(true);
+        // Maximizar la ventana en pantalla completa
+        interface1.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // Hacer que la ventana ocupe toda la pantalla sin bordes
+        interface1.setUndecorated(true);
         interface1.setLocationRelativeTo(null);
         interface1.setResizable(false);
-    
 
     }
 }
