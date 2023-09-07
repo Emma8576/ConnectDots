@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+//prueba de commit
 
 public class InterfaceClient extends JFrame implements ActionListener {
     private JLabel label1, label2, label3, label4;
