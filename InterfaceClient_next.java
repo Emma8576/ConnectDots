@@ -1,6 +1,11 @@
 import javax.swing.*;
+
+
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+
 
 public class InterfaceClient_next extends JFrame implements ActionListener {
     private JLabel num_rows, num_columns, hm_players, title;
@@ -110,7 +115,30 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
             formulario.setLocationRelativeTo(null);
         }
         if (e.getSource() == next) {
+            try{
+                int numRows = Integer.parseInt(hm_rows.getText());
+                int numCols = Integer.parseInt(hm_columns.getText());
 
+                JFrame frame = new JFrame();
+                GamePanel stage = new GamePanel(numRows, numCols);
+
+                frame.setBackground(new Color(47, 47, 47));
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                frame.setPreferredSize(screenSize);
+                frame.setUndecorated(true);
+                frame.add(stage);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+                stage.isSelecting = true;
+                Point2D.Double startPoint = stage.points.get(0);
+                Point2D.Double endPoint = stage.points.get(1);
+                stage.selectedLine = new Line2D.Double(startPoint, endPoint);
+            }catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(null, "Try again ");
+            }
         }
     }
 }

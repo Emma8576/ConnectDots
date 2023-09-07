@@ -1,9 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//prueba de commit
 
 public class InterfaceClient extends JFrame implements ActionListener {
+    public static final int RowsValue = 0;
+    public static final int ColsValue = 0;
     private JLabel label1, label2, label3, label4;
     private JButton close, play;
     private JTextField text;
