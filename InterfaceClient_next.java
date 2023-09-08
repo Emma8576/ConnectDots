@@ -31,13 +31,6 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
         title.setFont(new Font("Andale Mono", 3, 65));
         add(title);
 
-        plus = new JButton("+");
-        plus.setBounds(900, 200, 40, 40);
-        plus.setBackground(new Color(171, 219, 227));
-        plus.setFont(new Font("Andale Mono", 3, 5));
-        plus.setForeground(new Color(244, 236, 247));
-        plus.addActionListener(this);
-        add(plus);
 
         hm_players = new JLabel("Enter the name of the players who are going to play:");
         hm_players.setBounds(40, 200, 800, 50);
@@ -46,7 +39,7 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
         add(hm_players);
 
         player_name = new JTextArea();
-        player_name.setBounds(790, 200, 50, 45);
+        player_name.setBounds(790, 200, 300, 45);
         player_name.setBackground(new Color(171, 219, 227));
         player_name.setFont(new Font("Andale Mono", 3, 35));
         player_name.setForeground(new Color(255, 255, 255));
