@@ -162,7 +162,7 @@ public class GamePanel extends JPanel implements KeyListener {
 
         // Agregar componentes de opciones al panel de opciones
         // Ejemplo: Agregar un botón
-        JButton optionButton = new JButton("Opción 1");
+        JButton optionButton = new JButton("Options");
         optionsPanel.add(optionButton);
     
         optionButton.addActionListener(new ActionListener() {
@@ -170,14 +170,7 @@ public class GamePanel extends JPanel implements KeyListener {
                 // Crea e inicia la nueva ventana para InterfaceClient_next
                 JFrame interfaceNextFrame = new JFrame("Interface Client Next");
                 InterfaceClient_next interfaceNext = new InterfaceClient_next();
-        
-                // Configura la ventana y agrega la interfaz de usuario
-                interfaceNextFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                interfaceNextFrame.getContentPane().add(interfaceNext);
-                interfaceNextFrame.pack();
-                interfaceNextFrame.setLocationRelativeTo(null);
-                interfaceNextFrame.dispose();
-                interfaceNextFrame.setVisible(true);
+ 
             }
         });
         
