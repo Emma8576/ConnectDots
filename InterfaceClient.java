@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//prueba commit
+
 
 public class InterfaceClient extends JFrame implements ActionListener {
     public static final int RowsValue = 0;
