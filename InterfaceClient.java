@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+//configuración gh desktop
 
 
 public class InterfaceClient extends JFrame implements ActionListener {
