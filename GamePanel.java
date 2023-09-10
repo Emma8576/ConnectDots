@@ -3,7 +3,9 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
 import java.util.*;
-
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.*;
 // Definición de la clase Node que representa un nodo en una lista enlazada
 class Node<T> {
     T data;
@@ -93,7 +95,33 @@ class LinkedList<T> implements Iterable<T> {
     }
 }
 
-// Clase principal que representa el panel de juego
+class Client extends Thread {
+    public static void main(String[] args) {
+        try {
+            Socket socket = new Socket("127.0.0.1", 3000);
+            System.out.println("Connected!!");
+
+            // Obtiene el flujo de entrada del servidor
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            // Configura un bucle para escuchar mensajes del servidor
+            String serverMessage;
+            while ((serverMessage = in.readLine()) != null) {
+                System.out.println(serverMessage);
+            }
+
+            // Cuando el servidor cierra la conexión, sale del bucle
+            System.out.println("Disconnected from server");
+
+            // Cierra la conexión del cliente
+            socket.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
 public class GamePanel extends JPanel implements KeyListener {
 
     public LinkedList<Point2D.Double> points = new LinkedList<Point2D.Double>();
@@ -110,7 +138,6 @@ public class GamePanel extends JPanel implements KeyListener {
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem menuItem;
-    
 
     // Método principal para ejecutar la aplicación
     public static void main(String[] args) {
@@ -131,6 +158,9 @@ public class GamePanel extends JPanel implements KeyListener {
         Point2D.Double startPoint = stage.points.get(0);
         Point2D.Double endPoint = stage.points.get(1);
         stage.selectedLine = new Line2D.Double(startPoint, endPoint);
+
+        // Inicia el cliente en un hilo separado
+        new Client().start();
     }
 
     // Constructor de la clase GamePanel
@@ -141,8 +171,6 @@ public class GamePanel extends JPanel implements KeyListener {
 
         this.numRows = numRows;
         this.numCols = numCols;
-
-
 
         // Ajustar las dimensiones del panel
         int panelWidth = (numCols + 1) * 55; // Agregar una columna
@@ -164,17 +192,14 @@ public class GamePanel extends JPanel implements KeyListener {
         // Ejemplo: Agregar un botón
         JButton optionButton = new JButton("Options");
         optionsPanel.add(optionButton);
-    
+
         optionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Crea e inicia la nueva ventana para InterfaceClient_next
                 JFrame interfaceNextFrame = new JFrame("Interface Client Next");
                 InterfaceClient_next interfaceNext = new InterfaceClient_next();
- 
             }
         });
-        
-    
 
         // Agregar el panel de opciones a tu GamePanel
         this.setLayout(new BorderLayout());
@@ -182,10 +207,7 @@ public class GamePanel extends JPanel implements KeyListener {
 
         // Asegúrate de que el panel de opciones sea visible
         optionsPanel.setVisible(true);
-
-        
     }
-    
 
     // Método para dibujar en el panel
     public void paintComponent(Graphics graphics) {
@@ -202,14 +224,15 @@ public class GamePanel extends JPanel implements KeyListener {
 
         for (Point2D.Double p : points) {
             g2.setColor(Color.darkGray);
-            g2.fillRoundRect((int) (p.x - (pointSize / 2)), (int) (p.y - (pointSize / 2)), pointSize, pointSize, pointSize, pointSize);
+            g2.fillRoundRect((int) (p.x - (pointSize / 2)), (int) (p.y - (pointSize / 2)), pointSize, pointSize,
+                    pointSize, pointSize);
         }
 
         if (isSelecting && selectedLine != null) {
             g2.setColor(selectedLineColor);
-            g2.drawLine((int) selectedLine.getX1(), (int) selectedLine.getY1(), (int) selectedLine.getX2(), (int) selectedLine.getY2());
+            g2.drawLine((int) selectedLine.getX1(), (int) selectedLine.getY1(), (int) selectedLine.getX2(),
+                    (int) selectedLine.getY2());
         }
-
     }
 
     // Método para manejar eventos de teclado
@@ -242,7 +265,6 @@ public class GamePanel extends JPanel implements KeyListener {
             } else if (keyCode == KeyEvent.VK_DOWN && currentRow < numRows) {
                 newRow++;
             }
-            
 
             Point2D.Double currentPoint = points.get(currentRow * (numCols + 1) + currentCol);
             Point2D.Double newPoint = points.get(newRow * (numCols + 1) + newCol);
@@ -254,7 +276,6 @@ public class GamePanel extends JPanel implements KeyListener {
         }
 
         repaint();
-        
     }
 
     @Override
