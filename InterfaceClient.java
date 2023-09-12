@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//configuración gh desktop
-
 
 public class InterfaceClient extends JFrame implements ActionListener {
     public static final int RowsValue = 0;
@@ -21,9 +19,9 @@ public class InterfaceClient extends JFrame implements ActionListener {
 
         // Establecer imagen de fondo (asegúrate de tener la imagen en la ruta
         // especificada)
-        imagen = new ImageIcon("images/Logones.png");
+        imagen = new ImageIcon("images/Logo.png");
         label1 = new JLabel(imagen);
-        label1.setBounds(35, 30, 508, 513);
+        label1.setBounds(50, 50, 512, 512);
         add(label1);
 
         close = new JButton("Close game");

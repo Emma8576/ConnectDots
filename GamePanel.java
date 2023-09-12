@@ -3,8 +3,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
 import java.util.*;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.*;
 // Definición de la clase Node que representa un nodo en una lista enlazada
 class Node<T> {
