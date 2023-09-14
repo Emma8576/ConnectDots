@@ -195,6 +195,7 @@ public class GamePanel extends JPanel implements KeyListener {
                 // Crea e inicia la nueva ventana para InterfaceClient_next
                 JFrame interfaceNextFrame = new JFrame("Interface Client Next");
                 InterfaceClient_next interfaceNext = new InterfaceClient_next();
+  
             }
         });
 
