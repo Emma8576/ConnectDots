@@ -144,9 +144,7 @@ public class GamePanel extends JPanel implements KeyListener {
         GamePanel stage = new GamePanel(numRows, numCols);
 
         frame.setBackground(new Color(47, 47, 47));
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setPreferredSize(screenSize);
-        frame.setUndecorated(true);
+        frame.setResizable(true);
         frame.add(stage);
         frame.pack();
         frame.setLocationRelativeTo(null);
