@@ -187,17 +187,7 @@ public class GamePanel extends JPanel implements KeyListener {
 
         // Agregar componentes de opciones al panel de opciones
         // Ejemplo: Agregar un botón
-        JButton optionButton = new JButton("Options");
-        optionsPanel.add(optionButton);
-
-        optionButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Crea e inicia la nueva ventana para InterfaceClient_next
-                JFrame interfaceNextFrame = new JFrame("Interface Client Next");
-                InterfaceClient_next interfaceNext = new InterfaceClient_next();
-  
-            }
-        });
+        
 
         // Agregar el panel de opciones a tu GamePanel
         this.setLayout(new BorderLayout());
@@ -205,6 +195,28 @@ public class GamePanel extends JPanel implements KeyListener {
 
         // Asegúrate de que el panel de opciones sea visible
         optionsPanel.setVisible(true);
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(GamePanel.this);
+                currentFrame.dispose();  // Cierra el frame actual
+
+                InterfaceClient_next newInterface = new InterfaceClient_next();
+                newInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                newInterface.setUndecorated(true);
+                newInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                newInterface.setVisible(true);
+                newInterface.setResizable(false);
+                newInterface.setLocationRelativeTo(null);
+            }
+        });
+
+
+        optionsPanel.add(backButton);
+        new Client().start();
+
+
     }
 
     // Método para dibujar en el panel

@@ -105,7 +105,7 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void  actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
             InterfaceClient formulario = new InterfaceClient();
             formulario.setExtendedState(JFrame.MAXIMIZED_BOTH);
