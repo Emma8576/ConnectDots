@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.util.*;
 import java.io.*;
 import java.net.*;
-
+import java.util.concurrent.ThreadLocalRandom;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -99,31 +99,50 @@ class LinkedList<T> implements Iterable<T> {
 }
 
 class Client extends Thread {
+    private String identifier; // Almacenar el nuevo identificador de jugador
+    private Socket socket;
+
     public static void main(String[] args) {
+        Client client = new Client();
+        client.connectToServer();
+        client.start();
+    }
+
+    public void connectToServer() {
         try {
-            Socket socket = new Socket("127.0.0.1", 3000);
+            socket = new Socket("127.0.0.1", 3000);
             System.out.println("Connected!!");
 
-            // Obtiene el flujo de entrada del servidor
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-            // Configura un bucle para escuchar mensajes del servidor
-            String serverMessage;
-            while ((serverMessage = in.readLine()) != null) {
-                System.out.println(serverMessage);
-            }
+            char letter = (char) ('A' + ThreadLocalRandom.current().nextInt(0, 26));
+            identifier = Character.toString(letter);
 
-            // Cuando el servidor cierra la conexión, sale del bucle
-            System.out.println("Disconnected from server");
-
-            // Cierra la conexión del cliente
-            socket.close();
+            out.println(identifier);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void run() {
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            String serverMessage;
+            while ((serverMessage = in.readLine()) != null) {
+                System.out.println(serverMessage);
+            }
+
+            System.out.println("Disconnected from server");
+
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
 
 public class GamePanel extends JPanel implements KeyListener {
 
@@ -202,7 +221,7 @@ public class GamePanel extends JPanel implements KeyListener {
         // Asegura de que el panel de opciones sea visible
         optionsPanel.setVisible(true);
 
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton("Nueva partida");
         backButton.addActionListener(new ActionListener() {
             
             public void actionPerformed(ActionEvent e) {

@@ -5,6 +5,7 @@ class ClientHandler extends Thread {
     private Socket clientSocket;
     private PrintWriter out;
     private ClientHandler next;
+    private static int nextIdentifier = 1;
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -12,13 +13,16 @@ class ClientHandler extends Thread {
             this.out = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }   
     }
 
     public void run() {
         try {
             // Obtener flujos de entrada y salida del cliente
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+            int identifier = getNextIdentifier();
+            out.println(identifier);
 
             // Agregar el manejador del cliente a la lista enlazada
             addClient(this);
@@ -48,6 +52,9 @@ class ClientHandler extends Thread {
             String userLeftMessage = "Usuario desconectado: " + clientSocket.getInetAddress().getHostAddress();
             broadcast(userLeftMessage);
         }
+    }
+    private static synchronized int getNextIdentifier() {
+        return nextIdentifier++;
     }
 
     // Método para enviar un mensaje en broadcast a todos los clientes

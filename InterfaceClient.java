@@ -10,7 +10,7 @@ public class InterfaceClient extends JFrame implements ActionListener {
     private JLabel label1, label2, label3, label4;
     private JButton close, play;
     private JTextField text;
-    private ImageIcon imagen;
+    private ImageIcon imagen1, imagen2;
     public static String texto = "";
     private Clip backgroundMusic;
     private boolean isMusicPlaying = false;
@@ -43,16 +43,18 @@ public class InterfaceClient extends JFrame implements ActionListener {
 
     
         // Establecer imagen de fondo (asegúrate de tener la imagen en la ruta especificada)
-        imagen = new ImageIcon("images/Logo.png");
-        label1 = new JLabel(imagen);
-        label1.setBounds(40, 40, 512, 512);
-        add(label1);
 
         //Establecer logo ConnectDots 
-        imagen = new ImageIcon("images/dots.png");
-        label1 = new JLabel(imagen);
-        label1.setBounds(550, 1, 800, 512);
+        imagen1 = new ImageIcon("images/dots.png");
+        label1 = new JLabel(imagen1);
+        label1.setBounds(450, 1, 800, 512);
         add(label1);
+
+        imagen2 = new ImageIcon("images/happy_alien-removebg-preview (2) (1).png");
+        label2 = new JLabel(imagen2);
+        label2.setBounds(0,40,512,600);
+        add(label2);
+
 
         close = new JButton("Close game");
         close.setBounds(550, 500, 220, 100);
