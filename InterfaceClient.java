@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import javax.sound.sampled.*;
 
 public class InterfaceClient extends JFrame implements ActionListener {
     public static final int RowsValue = 0;
@@ -10,8 +12,30 @@ public class InterfaceClient extends JFrame implements ActionListener {
     private JTextField text;
     private ImageIcon imagen;
     public static String texto = "";
+    private Clip backgroundMusic;
+    private boolean isMusicPlaying = false;
 
     public InterfaceClient() {
+        // Inicializa el reproductor de música de fondo
+        try {
+            File musicFile = new File("sounds/intro.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(musicFile);
+            backgroundMusic = AudioSystem.getClip();
+            backgroundMusic.open(audioInputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Agrega un controlador de eventos para detectar cuándo termina la canción y repetirla
+        backgroundMusic.addLineListener(new LineListener() {
+            public void update(LineEvent event) {
+                if (event.getType() == LineEvent.Type.STOP) {
+                    event.getLine().close();
+                    startBackgroundMusic(); // Reproduce la música nuevamente cuando termine
+                }
+            }
+        });
+
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Hola, soy Bryan");
@@ -19,6 +43,7 @@ public class InterfaceClient extends JFrame implements ActionListener {
 
         // Establecer imagen de fondo (asegúrate de tener la imagen en la ruta
         // especificada)
+        // Establecer imagen de fondo (asegúrate de tener la imagen en la ruta especificada)
         imagen = new ImageIcon("images/Logo.png");
         label1 = new JLabel(imagen);
         label1.setBounds(50, 50, 512, 512);
@@ -50,9 +75,16 @@ public class InterfaceClient extends JFrame implements ActionListener {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     new InterfaceClient_next();
-
                 }
             });
+            startBackgroundMusic();
+        }
+    }
+
+    private void startBackgroundMusic() {
+        if (!isMusicPlaying && backgroundMusic != null) {
+            backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+            isMusicPlaying = true;
         }
     }
 
@@ -66,6 +98,8 @@ public class InterfaceClient extends JFrame implements ActionListener {
                 formulario.setVisible(true);
                 formulario.setResizable(false);
                 formulario.setLocationRelativeTo(null);
+
+                formulario.startBackgroundMusic(); // Inicia la música de fondo
             }
         });
     }
