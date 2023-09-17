@@ -146,6 +146,7 @@ public class GamePanel extends JPanel implements KeyListener {
         frame.setBackground(new Color(47, 47, 47));
         frame.setResizable(true);
         frame.add(stage);
+        frame.add(new GamePanel(numRows, numCols));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -193,18 +194,18 @@ public class GamePanel extends JPanel implements KeyListener {
         this.setLayout(new BorderLayout());
         this.add(optionsPanel, BorderLayout.NORTH); // Agrega el panel en la esquina superior derecha
 
-        // Asegúrate de que el panel de opciones sea visible
+        // Asegura de que el panel de opciones sea visible
         optionsPanel.setVisible(true);
 
         JButton backButton = new JButton("Back");
         backButton.addActionListener(new ActionListener() {
+            
             public void actionPerformed(ActionEvent e) {
                 JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(GamePanel.this);
                 currentFrame.dispose();  // Cierra el frame actual
 
                 InterfaceClient_next newInterface = new InterfaceClient_next();
                 newInterface.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                newInterface.setUndecorated(true);
                 newInterface.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 newInterface.setVisible(true);
                 newInterface.setResizable(false);
