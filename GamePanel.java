@@ -152,7 +152,7 @@ public class GamePanel extends JPanel implements KeyListener {
         frame.setResizable(true);
         frame.add(stage);
         frame.add(new GamePanel(numRows, numCols));
-        frame.pack();
+        frame.setBounds(0, 0, 800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,10 +175,10 @@ public class GamePanel extends JPanel implements KeyListener {
         this.numRows = numRows;
         this.numCols = numCols;
 
-        // Ajustar las dimensiones del panel
-        int panelWidth = (numCols + 1) * 55; // Agregar una columna
-        int panelHeight = (numRows + 1) * 55; // Agregar una fila
-        setPreferredSize(new Dimension(panelWidth, panelHeight));
+        // Ajustar las dimensiones del panel (tamaño del GamePanel)
+        int panelWidth = 800; // Tamaño deseado en anchura
+        int panelHeight = 600; // Tamaño deseado en altura
+    setPreferredSize(new Dimension(panelWidth, panelHeight));
 
         // Inicializar la lista de puntos disponibles para dibujar
         for (int i = 1; i <= numRows + 1; i++) {
