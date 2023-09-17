@@ -41,16 +41,21 @@ public class InterfaceClient extends JFrame implements ActionListener {
         setTitle("Hola, soy Bryan");
         getContentPane().setBackground(new Color(0, 0, 0));
 
-        // Establecer imagen de fondo (asegúrate de tener la imagen en la ruta
-        // especificada)
+    
         // Establecer imagen de fondo (asegúrate de tener la imagen en la ruta especificada)
         imagen = new ImageIcon("images/Logo.png");
         label1 = new JLabel(imagen);
-        label1.setBounds(50, 50, 512, 512);
+        label1.setBounds(40, 40, 512, 512);
+        add(label1);
+
+        //Establecer logo ConnectDots 
+        imagen = new ImageIcon("images/dots.png");
+        label1 = new JLabel(imagen);
+        label1.setBounds(550, 1, 800, 512);
         add(label1);
 
         close = new JButton("Close game");
-        close.setBounds(550, 400, 220, 100);
+        close.setBounds(550, 500, 220, 100);
         close.setBackground(new Color(65, 75, 178));
         close.setFont(new Font("Andale Mono", 3, 30));
         close.setForeground(new Color(244, 236, 247));
@@ -58,7 +63,7 @@ public class InterfaceClient extends JFrame implements ActionListener {
         add(close);
 
         play = new JButton("Start game");
-        play.setBounds(900, 400, 220, 100);
+        play.setBounds(900, 500, 220, 100);
         play.setBackground(new Color(143, 209, 79));
         play.setFont(new Font("Andale Mono", 3, 30));
         play.setForeground(new Color(244, 236, 247));
