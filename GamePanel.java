@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.util.*;
 import java.io.*;
 import java.net.*;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 // Definición de la clase Node que representa un nodo en una lista enlazada
 class Node<T> {
     T data;
@@ -137,6 +141,7 @@ public class GamePanel extends JPanel implements KeyListener {
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem menuItem;
+    private Clip soundClip;
 
     // Método principal para ejecutar la aplicación
     public static void main(String[] args) {
@@ -216,9 +221,18 @@ public class GamePanel extends JPanel implements KeyListener {
 
         optionsPanel.add(backButton);
         new Client().start();
-
-
+        // Cargar el archivo de sonido
+        try {
+            File soundFile = new File("sounds/ping.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            soundClip = AudioSystem.getClip();
+            soundClip.open(audioIn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    
 
     // Método para dibujar en el panel
     public void paintComponent(Graphics graphics) {
@@ -258,6 +272,9 @@ public class GamePanel extends JPanel implements KeyListener {
 
                 isSelecting = false;
                 selectedLine = null;
+
+                //Reproducir el sonido de las conexiones
+                playPingSound();
             } else {
                 isSelecting = true;
                 Point2D.Double startPoint = points.get(currentRow * (numCols + 1) + currentCol);
@@ -289,6 +306,19 @@ public class GamePanel extends JPanel implements KeyListener {
         repaint();
     }
 
+    // Método para reproducir el sonido "ping.wav"
+    private void playPingSound() {
+        try {
+            if (soundClip != null) {
+                soundClip.stop();
+                soundClip.setFramePosition(0); // Reiniciar al principio
+                soundClip.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     @Override
     public void keyTyped(KeyEvent e) {
     }
