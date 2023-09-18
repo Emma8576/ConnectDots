@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.io.File;
 import javax.sound.sampled.*;
 
+
 public class InterfaceClient extends JFrame implements ActionListener {
     public static final int RowsValue = 0;
     public static final int ColsValue = 0;
@@ -76,6 +77,8 @@ public class InterfaceClient extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == close) {
             System.exit(0);
+            playSound("sounds/clic.wav");
+
         }
         if (e.getSource() == play) {
             dispose();
@@ -84,9 +87,23 @@ public class InterfaceClient extends JFrame implements ActionListener {
                     new InterfaceClient_next();
                 }
             });
+            playSound("sounds/clic.wav");
+
             startBackgroundMusic();
         }
     }
+    private void playSound(String filePath) {
+        try {
+            File soundFile = new File(filePath);
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(soundFile));
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+      
 
     private void startBackgroundMusic() {
         if (!isMusicPlaying && backgroundMusic != null) {

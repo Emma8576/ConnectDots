@@ -1,10 +1,12 @@
 import javax.swing.*;
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.io.File;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 
 
 public class InterfaceClient_next extends JFrame implements ActionListener {
@@ -114,6 +116,8 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
             formulario.setVisible(true);
             formulario.setResizable(false);
             formulario.setLocationRelativeTo(null);
+
+            playSound("sounds/clic.wav");
         }
         if (e.getSource() == next) {
             try{
@@ -138,6 +142,17 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
             }catch(NumberFormatException ex){
                 JOptionPane.showMessageDialog(null, "Try again ");
             }
+        }
+        playSound("sounds/clic.wav");
+    }
+    private void playSound(String filePath) {
+        try {
+            File soundFile = new File(filePath);
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(soundFile));
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
