@@ -1,11 +1,19 @@
 import java.io.*;
 import java.net.*;
 
+/**
+ * Clase conductora de la conexión con el cliente
+ */
 class ClientHandler extends Thread {
     private Socket clientSocket;
     private PrintWriter out;
     private ClientHandler next;
     private static int nextIdentifier = 1;
+
+    /**
+     * Constructor para inicializar un nuevo ClientHandler.
+     * @param socket El socket que representa la conexión con el cliente.
+     */
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -15,7 +23,9 @@ class ClientHandler extends Thread {
             e.printStackTrace();
         }   
     }
-
+    /**
+     * Método principal que ejecuta el hilo para manejar la comunicación con el cliente.
+     */
     public void run() {
         try {
             // Obtener flujos de entrada y salida del cliente
@@ -53,12 +63,19 @@ class ClientHandler extends Thread {
             broadcast(userLeftMessage);
         }
     }
+    /**
+     * Método estático sincronizado para obtener el siguiente identificador único para cada cliente que se conecta al servidor.
+     * @return El siguiente identificador único.
+     */ 
     private static synchronized int getNextIdentifier() {
         return nextIdentifier++;
     }
 
-    // Método para enviar un mensaje en broadcast a todos los clientes
-    private static void broadcast(String message) {
+    /**
+     * Método para enviar un mensaje en broadcast a todos los clientes.
+     *
+     * @param message El mensaje a enviar.
+     */    private static void broadcast(String message) {
         ClientHandler current = firstClient;
         while (current != null) {
             current.out.println(message);
@@ -68,7 +85,10 @@ class ClientHandler extends Thread {
 
     // Implementa una lista enlazada personalizada para los clientes
     private static ClientHandler firstClient;
-
+    /**
+     * Método estático para añadir un cliente a la lista enlazada de clientes.
+     * @param client El ClientHandler que representa al cliente.
+     */
     private static void addClient(ClientHandler client) {
         if (firstClient == null) {
             firstClient = client;
@@ -80,7 +100,11 @@ class ClientHandler extends Thread {
             current.next = client;
         }
     }
-
+     /**
+     * Método estático para remover un cliente de la lista enlazada de clientes, eliminando a este y pasando al siguiente jugador.
+     *
+     * @param client El ClientHandler que representa al cliente a remover.
+     */
     private static void removeClient(ClientHandler client) {
         if (firstClient == client) {
             firstClient = client.next;
@@ -95,8 +119,13 @@ class ClientHandler extends Thread {
         }
     }
 }
-
+/**
+ * Clase principal que representa el servidor.
+ */
 public class Server {
+     /**
+     * Método principal que inicia el servidor y acepta conexiones de clientes.
+     */
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(3000);
