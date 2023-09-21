@@ -8,12 +8,19 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 
-
+/**
+ * Clase que almacena la configuración visual y de audio de la interfaz de configuración
+ * Se crean los elementos que contienen el canva(labels, botones,...)
+ */
 public class InterfaceClient_next extends JFrame implements ActionListener {
     private JLabel num_rows, num_columns, hm_players, title;
     private JButton back, next, plus;
     private JTextArea hm_rows, hm_columns, player_name;
 
+
+    /**
+     * Configuración de los elementos que contiene la interfaz
+     */
     public InterfaceClient_next() {
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -97,7 +104,9 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
         next.addActionListener(this);
         add(next);
     }
-
+    /**
+     * Método principal que inicializa la configuración de pantalla
+     */
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -105,7 +114,11 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
             }
         });
     }
-
+    /**
+     * Método principal que almacena el comportamiento de los botones al ser presionados
+     * @param back Devuelve al usuario a la ventana de bienvenida
+     * @param next Inicializa la ventana de juego preiamente configurada por el usuario 
+     */
     @Override
     public void  actionPerformed(ActionEvent e) {
         if (e.getSource() == back) {
@@ -116,16 +129,18 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
             formulario.setVisible(true);
             formulario.setResizable(false);
             formulario.setLocationRelativeTo(null);
-
+            //sonido de clic al presionar los botones
             playSound("sounds/clic.wav");
         }
+
         if (e.getSource() == next) {
             try{
-                int numRows = Integer.parseInt(hm_rows.getText());
-                int numCols = Integer.parseInt(hm_columns.getText());
+                
+                int numRows = Integer.parseInt(hm_rows.getText());// variable que almacena el número de filas configurada por el usuario
+                int numCols = Integer.parseInt(hm_columns.getText()); // variable que almacena el número de columnas configurada por el usuario
 
                 JFrame frame = new JFrame();
-                GamePanel stage = new GamePanel(numRows, numCols);
+                GamePanel stage = new GamePanel(numRows, numCols);//Método que envía la configuración de usuario a la representación gráfica en GamePanel
 
                 frame.setBackground(new Color(47, 47, 47));
                 frame.setResizable(true);
@@ -136,15 +151,19 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 stage.isSelecting = true;
-                Point2D.Double startPoint = stage.points.get(0);
-                Point2D.Double endPoint = stage.points.get(1);
+                Point2D.Double startPoint = stage.points.get(0); //obtiene el primer punto de la lista points en el objeto stage y lo asigna a la variable startPoint
+                Point2D.Double endPoint = stage.points.get(1);//obtiene el segundo punto de la lista points en el objeto stage y lo asigna a la variable endPoint.
                 stage.selectedLine = new Line2D.Double(startPoint, endPoint);
-            }catch(NumberFormatException ex){
+            }catch(NumberFormatException ex){ //control de error
                 JOptionPane.showMessageDialog(null, "Try again ");
             }
         }
+        //música de fondo
         playSound("sounds/clic.wav");
     }
+    /**
+     * @param playSound Método que mantiene de fondo música en reproducción
+     */
     private void playSound(String filePath) {
         try {
             File soundFile = new File(filePath);
