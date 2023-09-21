@@ -4,7 +4,10 @@ import java.awt.event.*;
 import java.io.File;
 import javax.sound.sampled.*;
 
-
+/**
+ * clase que representa la configuración de imágenes y sonido de la ventana de bienvenida
+ * Creación de diferentes elementos que están contenidos sobre el canva
+*/
 public class InterfaceClient extends JFrame implements ActionListener {
     public static final int RowsValue = 0;
     public static final int ColsValue = 0;
@@ -15,6 +18,11 @@ public class InterfaceClient extends JFrame implements ActionListener {
     public static String texto = "";
     private Clip backgroundMusic;
     private boolean isMusicPlaying = false;
+
+    /**
+     * Constructor de la clase InterfaceClient.
+     * Inicializa la interfaz gráfica y configura los elementos como botones, etiquetas, etc.
+     */
 
     public InterfaceClient() {
         // Inicializa el reproductor de música de fondo
@@ -73,7 +81,10 @@ public class InterfaceClient extends JFrame implements ActionListener {
         play.addActionListener(this);
         add(play);
     }
-
+    /**
+     * Método que maneja los eventos de la interfaz gráfica
+     * @param e Objeto ActionEvent que representa el evento.
+    */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == close) {
             System.exit(0);
@@ -92,6 +103,10 @@ public class InterfaceClient extends JFrame implements ActionListener {
             startBackgroundMusic();
         }
     }
+    /**
+     * Reprodece un sonido a partir del archivo especificado
+     * @param filePath Ruta del archivo de sonido.
+     */
     private void playSound(String filePath) {
         try {
             File soundFile = new File(filePath);
@@ -105,13 +120,16 @@ public class InterfaceClient extends JFrame implements ActionListener {
     
       
 
-    private void startBackgroundMusic() {
+    private void startBackgroundMusic() {   //Inicia la música de fondo si no se está reproduciendo actualmente.
         if (!isMusicPlaying && backgroundMusic != null) {
             backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
             isMusicPlaying = true;
         }
     }
-
+    /**
+     * Método principal que inicia la aplicación.
+     * @param args Argumentos de línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
