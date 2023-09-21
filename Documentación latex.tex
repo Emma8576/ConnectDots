@@ -1,0 +1,47 @@
+\documentclass[12pt, letterpaper, twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[style=apa, backend=biber]{biblatex}
+
+\title{Connect Dots}
+\author{}
+\newcommand{\institute}{Tecnológico de Costa Rica}
+\newcommand{\coursename}{Algoritmos y Estructuras de Datos I}
+\newcommand{\professor}{Leonardo Araya}
+\newcommand{\semester}{Segundo Semestre 2023}
+
+\addbibresource{references.bib}
+
+\begin{document}
+	
+	\begin{titlepage}
+		\maketitle
+		
+		\vspace{2cm}
+		
+		\begin{center}
+			{\Large Bryan Monge \\[0.5cm] Emannuel Calvo \\[0.5cm] Enrique \\[1cm]}
+		\end{center}
+		
+		\begin{center}
+			\begin{tabular}{l}
+				\institute \\
+				\coursename \\
+				\professor \\
+				\semester \\
+			\end{tabular}
+		\end{center}
+		
+	\end{titlepage}
+	
+	\vfill
+	
+	\section*{Descripción del problema}
+	
+	\begin{flushleft}
+		Se solicita la implementación de un programa en Java usando Linked Lists que, controlado mediante un circuito electrónico escrito en Arduino, simule el control para jugar Connect Dots. El juego consiste en una matriz n x n compuesta por puntos en cada uno de los vértices de los cuadros que forman la matriz. El objetivo del juego consiste en que por medio de turnos cada jugador conecte dos puntos próximos en el eje "xz z. cualquier lugar de la maya, con la intención de que el jugador que complete un cuadrado gana un punto; cada jugador debe formar la mayor cantidad posible de cuadrados. Es un juego de estrategia, pues cada jugador en su turno debe intentar completar un cuadrado, al mismo tiempo que debe evitar que otros jugadores completen los mismos. Entre las reglas del juego, se encuentra que las líneas no pueden ser diagonales ni dejar puntos de por medio, es decir, el jugador selecciona un punto, para conectarlo inmediatamente con el próximo punto ubicado en el eje "xz z". Si un jugador logra completar un cuadro, este marca la inicial del jugador dentro, luego puede seguir jugando hasta que agregue una línea que no cierre ningún cuadrado. 
+		
+		Para el desarrollo del proyecto, se pide un servidor central que consiste en una aplicación en Java que escucha las conexiones entrantes por un Socket. Cada aplicación cliente se ejecuta en una computadora y se conecta por socket al servidor. Pueden jugar varios jugadores a la vez. El servidor lleva el control completo del juego actualizando la maya. Los clientes únicamente grafican lo que el servidor les envía haciendo pull cada n segundos. Los clientes a su vez envían las acciones que realicen al servidor, el cual se encarga de mantener el estado del juego completo. El control permitirá al usuario moverse arriba, abajo, derecha e izquierda.
+	\end{flushleft}
+	
+\end{document}
