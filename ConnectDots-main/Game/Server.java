@@ -4,15 +4,28 @@ import java.util.ArrayList;
 
 /////////////////////////////////Sever!!!!!!!!!!!!!!!!!!!!!!!!!
 
+/**
+ * Esta clase representa el servidor que acepta conexiones de clientes.
+ */
 public class Server {
     private ServerSocket serverSocket;
     private Client_Handler clientHandler;
 
+    /**
+     * Constructor de la clase Server.
+     *
+     * @param serverSocket El objeto ServerSocket utilizado para aceptar conexiones de clientes.
+     */
     public Server(ServerSocket serverSocket){
         this.serverSocket = serverSocket;
 
     }
 
+    /**
+     * Inicia el servidor y comienza a aceptar conexiones de clientes.
+     *
+     * @param contador Un contador que realiza un seguimiento de la cantidad de clientes conectados.
+     */
     public void startServer(int contador){
         try{
             while (true){
@@ -29,7 +42,11 @@ public class Server {
 
         }
     }
-    
+    /**
+     * Método principal que crea y configura un servidor.
+     *
+     * @param args Argumentos de la línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String[] args) {
         try {
             int contador = 0;
