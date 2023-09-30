@@ -8,12 +8,17 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 
-
+/**
+ * Esta clase representa la interfaz gráfica de usuario para configurar el juego.
+ */
 public class InterfaceClient_next extends JFrame implements ActionListener {
     private JLabel num_rows, num_columns, hm_players, title;
     private JButton back, next, plus;
     private JTextArea hm_rows, hm_columns, player_name;
 
+    /**
+     * Constructor de la clase InterfaceClient_next que inicializa la interfaz de configuración del juego.
+     */
     public InterfaceClient_next() {
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -97,7 +102,11 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
         next.addActionListener(this);
         add(next);
     }
-
+    /**
+     * Método principal que crea y configura la interfaz gráfica de configuración del juego.
+     *
+     * @param args Argumentos de la línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -145,6 +154,13 @@ public class InterfaceClient_next extends JFrame implements ActionListener {
         }
         playSound("sounds/clic.wav");
     }
+
+    /**
+     * Reproduce un sonido a partir de un archivo de sonido.
+     *
+     * @param filePath La ruta del archivo de sonido que se va a reproducir.
+     */
+    
     private void playSound(String filePath) {
         try {
             File soundFile = new File(filePath);

@@ -4,7 +4,9 @@ import java.awt.event.*;
 import java.io.File;
 import javax.sound.sampled.*;
 
-
+/**
+ * Esta clase representa la interfaz gráfica de usuario para el cliente del juego.
+ */
 public class InterfaceClient extends JFrame implements ActionListener {
     public static final int RowsValue = 0;
     public static final int ColsValue = 0;
@@ -16,6 +18,9 @@ public class InterfaceClient extends JFrame implements ActionListener {
     private Clip backgroundMusic;
     private boolean isMusicPlaying = false;
 
+    /**
+     * Constructor de la clase InterfaceClient que inicializa la interfaz de usuario.
+     */
     public InterfaceClient() {
         // Inicializa el reproductor de música de fondo
         try {
@@ -73,7 +78,11 @@ public class InterfaceClient extends JFrame implements ActionListener {
         play.addActionListener(this);
         add(play);
     }
-
+    /**
+     * Controla las acciones realizadas por el usuario, como cerrar el juego o comenzar el juego.
+     *
+     * @param e El evento de acción que desencadenó este método.
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == close) {
             System.exit(0);
@@ -92,6 +101,12 @@ public class InterfaceClient extends JFrame implements ActionListener {
             startBackgroundMusic();
         }
     }
+    /**
+     * Reproduce un sonido a partir de un archivo de sonido.
+     *
+     * @param filePath La ruta del archivo de sonido que se va a reproducir.
+     */
+
     private void playSound(String filePath) {
         try {
             File soundFile = new File(filePath);
@@ -104,7 +119,9 @@ public class InterfaceClient extends JFrame implements ActionListener {
     }
     
       
-
+    /**
+     * Inicia la música de fondo si no se está reproduciendo actualmente.
+     */
     private void startBackgroundMusic() {
         if (!isMusicPlaying && backgroundMusic != null) {
             backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
@@ -112,6 +129,11 @@ public class InterfaceClient extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Método principal que crea y configura la interfaz gráfica del cliente.
+     *
+     * @param args Argumentos de la línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String args[]) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
