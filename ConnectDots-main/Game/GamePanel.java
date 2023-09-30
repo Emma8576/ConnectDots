@@ -12,28 +12,47 @@ import java.util.concurrent.ThreadLocalRandom;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-// Definición de la clase Node que representa un nodo en una lista enlazada
+/**
+ * Definición de la clase Node que representa un nodo en una lista enlazada.
+ *
+ * @param <T> Tipo genérico para los datos almacenados en el nodo.
+ */
 class Node<T> {
     T data;
     Node<T> next;
 
+    /**
+ * Constructor de la clase Node.
+ *
+ * @param data El dato que se almacenará en el nodo.
+ */
     public Node(T data) {
         this.data = data;
         this.next = null;
     }
 }
 
-// Definición de la clase LinkedList que implementa una lista enlazada genérica
+/**
+ * Definición de la clase LinkedList que implementa una lista enlazada genérica.
+ *
+ * @param <T> Tipo genérico para los elementos de la lista.
+ */
 class LinkedList<T> implements Iterable<T> {
     private Node<T> head;
     private Node<T> tail;
-
+    /**
+     * Constructor de la clase LinkedList.
+     */
     public LinkedList() {
         head = null;
         tail = null;
     }
 
-    // Método para agregar un elemento al final de la lista
+    /**
+     * Método para agregar un elemento al final de la lista.
+     *
+     * @param data El elemento que se agregará a la lista.
+     */
     public void add(T data) {
         Node<T> newNode = new Node<T>(data);
         if (head == null) {
@@ -45,7 +64,14 @@ class LinkedList<T> implements Iterable<T> {
         }
     }
 
-    // Método para obtener un elemento en un índice específico
+        /**
+     * Método para obtener un elemento en un índice específico.
+     *
+     * @param index El índice del elemento que se desea obtener.
+     * @return El elemento en el índice especificado.
+     * @throws IllegalArgumentException Si el índice es negativo.
+     * @throws IndexOutOfBoundsException Si el índice está fuera de los límites de la lista.
+     */
     public T get(int index) {
         if (index < 0) {
             throw new IllegalArgumentException("Index cannot be negative");
@@ -62,7 +88,11 @@ class LinkedList<T> implements Iterable<T> {
         throw new IndexOutOfBoundsException("Index out of bounds");
     }
 
-    // Método para obtener el tamaño de la lista
+    /**
+     * Método para obtener el tamaño de la lista.
+     *
+     * @return El número de elementos en la lista.
+     */
     public int size() {
         int count = 0;
         Node<T> current = head;
@@ -72,20 +102,36 @@ class LinkedList<T> implements Iterable<T> {
         }
         return count;
     }
-
+        /**
+     * Devuelve un iterador sobre los elementos de la lista.
+     *
+     * @return Un iterador que permite recorrer los elementos de la lista.
+     */
     @Override
     public Iterator<T> iterator() {
         return new LinkedListIterator();
     }
 
-    // Clase interna LinkedListIterator que implementa un iterador para la lista enlazada
+    /**
+     * Clase interna LinkedListIterator que implementa un iterador para la lista enlazada.
+     */
     private class LinkedListIterator implements Iterator<T> {
         private Node<T> current = head;
 
+        /**
+         * Verifica si hay más elementos en la lista.
+         *
+         * @return true si hay más elementos, false si no.
+         */
         public boolean hasNext() {
             return current != null;
         }
-
+        /**
+         * Obtiene el siguiente elemento de la lista.
+         *
+         * @return El siguiente elemento en la lista.
+         * @throws NoSuchElementException Si no hay más elementos para iterar.
+         */
         public T next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -94,19 +140,32 @@ class LinkedList<T> implements Iterable<T> {
             current = current.next;
             return data;
         }
-
+        /**
+         * No se admite la operación de eliminación en este iterador.
+         *
+         * @throws UnsupportedOperationException Si se intenta usar la operación "remove".
+         */
         public void remove() {
             throw new UnsupportedOperationException();
         }
     }
 }
-
+/**
+ * Clase Client que representa un cliente de red.
+ */
 class Client extends Thread {
     private String identifier; // Almacenar el nuevo identificador de jugador
     private Socket socket;
     private GamePanel gamePanel;
 
-
+    /**
+     * Constructor de la clase Client.
+     *
+     * @param test     Una cadena que indica el tipo de cliente (para pruebas, etc.).
+     * @param socket1  El socket para la comunicación con el servidor.
+     * @param columna  La columna en el juego.
+     * @param fila     La fila en el juego.
+     */
     public Client(String test,Socket socket1,int columna, int fila){
         if(test.equals("comiezo")){
             this.gamePanel = new GamePanel(fila-1, columna-1, this, "", "Test", socket1);
@@ -120,7 +179,12 @@ class Client extends Thread {
         }
 
     }
-
+    /**
+     * Método principal que inicia la aplicación del cliente.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados aquí).
+     * @throws IOException Excepción en caso de error de E/S.
+     */
     public static void main(String[] args) throws IOException {
         Socket socket4 = null;
         GamePanel gamepanel1 = null;
@@ -130,6 +194,9 @@ class Client extends Thread {
         client.run(gamepanel1,socket4);        
     }
 
+    /**
+     * Establece una conexión con el servidor.
+     */
     public void connectToServer() {
         
         try {
@@ -157,7 +224,13 @@ class Client extends Thread {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Método que maneja la comunicación con el servidor.
+     *
+     * @param gamePanel El panel de juego asociado.
+     * @param socket    El socket para la comunicación con el servidor.
+     * @throws IOException Excepción en caso de error de E/S.
+     */
     public void run(GamePanel gamePanel,Socket socket) throws IOException {
         
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -207,6 +280,16 @@ class Client extends Thread {
                 e.printStackTrace();
             }
     }
+
+    /**
+     * Método para enviar un movimiento al servidor.
+     *
+     * @param row     Fila de inicio del movimiento.
+     * @param col     Columna de inicio del movimiento.
+     * @param socket  El socket para la comunicación con el servidor.
+     * @param newrow  Nueva fila después del movimiento.
+     * @param newcol  Nueva columna después del movimiento.
+     */
     public void sendMoveToServer(int row, int col, Socket socket,int newrow, int newcol) {
         
     try {
@@ -224,6 +307,14 @@ class Client extends Thread {
     }
     
 }
+    /**
+     * Método para enviar una acción de pintura al servidor.
+     *
+     * @param pintar Valor que indica la acción de pintura.
+     * @param socket El socket para la comunicación con el servidor.
+     * @param row    Fila en la que se realiza la acción de pintura.
+     * @param col    Columna en la que se realiza la acción de pintura.
+     */
     public void sendpintar(int pintar,Socket socket,int row,int col) {
         try {
             
@@ -241,7 +332,9 @@ class Client extends Thread {
 
 }
 
-
+/**
+ * Clase GamePanel que representa el panel de juego.
+ */
 public class GamePanel extends JPanel implements KeyListener {
 
     public LinkedList<Point2D.Double> points = new LinkedList<Point2D.Double>();
@@ -284,6 +377,14 @@ public class GamePanel extends JPanel implements KeyListener {
         Client.main(args);
     }
 
+    /**
+     * Método para realizar pruebas del panel de juego.
+     *
+     * @param socket4  Socket para la comunicación con el servidor.
+     * @param columna  Número de columnas en el juego.
+     * @param fila     Número de filas en el juego.
+     * @throws Exception Excepción en caso de error.
+     */
     public void testing(Socket socket4,int columna,int fila)throws Exception{
         
         JFrame frame = new JFrame();
@@ -307,7 +408,16 @@ public class GamePanel extends JPanel implements KeyListener {
         
         }
     
-    // Constructor de la clase GamePanel
+        /**
+     * Constructor de la clase GamePanel.
+     *
+     * @param numRow    Número de filas en el juego.
+     * @param numCol    Número de columnas en el juego.
+     * @param client    Cliente asociado a este panel.
+     * @param message   Mensaje del servidor.
+     * @param box       Nombre del jugador.
+     * @param socket5   Socket para la comunicación con el servidor.
+     */
     public GamePanel(int numRow, int numCol,Client client,String message,String box,Socket socket5) {
         this.socket5 = socket5;
         this.client=client;
@@ -388,7 +498,11 @@ public class GamePanel extends JPanel implements KeyListener {
        
     }
     
-    // Método para dibujar en el panel
+    /**
+     * Método para dibujar en el panel.
+     *
+     * @param graphics El contexto gráfico en el que se dibujará.
+     */
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g2 = (Graphics2D) graphics;
@@ -439,7 +553,11 @@ public class GamePanel extends JPanel implements KeyListener {
 
     }
 
-    // Método para manejar eventos de teclado
+    /**
+     * Implementación del método de interfaz KeyListener: keyPressed.
+     *
+     * @param e Evento de tecla presionada.
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         
@@ -566,7 +684,9 @@ public class GamePanel extends JPanel implements KeyListener {
 
     }
 
-    // Método para reproducir el sonido "ping.wav"
+    /**
+     * Método para reproducir el sonido "ping.wav".
+     */
     private void playPingSound() {
         try {
             if (soundClip != null) {
@@ -587,7 +707,11 @@ public class GamePanel extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
     }
     
-    
+    /**
+     * Método para procesar el movimiento del servidor.
+     *
+     * @param message Mensaje del servidor.
+     */
     public void processServerMove(String moveMessage) {
         String[] parts = moveMessage.split(" ");
         if (parts.length == 5 && parts[0].equals("MOVE")) {
@@ -608,7 +732,11 @@ public class GamePanel extends JPanel implements KeyListener {
             
         }
     }
-
+    /**
+     * Método para pintar una línea en el panel basado en un mensaje recibido del servidor.
+     *
+     * @param moveMessage El mensaje que contiene la información de la línea a pintar.
+     */
     public void pinta_socket(String moveMessage) {
         
         String[] parts = moveMessage.split(" ");
@@ -654,7 +782,9 @@ public class GamePanel extends JPanel implements KeyListener {
         }
         }
     }
-    
+    /**
+     * Método para verificar cuadrados formados por las líneas en el panel.
+     */
     public void verificarCuadrados() {
         // Recorrer el array de líneas
         for (int i = 0; i < lines.size(); i++) {
@@ -704,7 +834,15 @@ public class GamePanel extends JPanel implements KeyListener {
         }
         
     }
-
+    /**
+     * Comprueba si las líneas dadas forman un cuadrado.
+     *
+     * @param linea1 La primera línea.
+     * @param linea2 La segunda línea.
+     * @param linea3 La tercera línea.
+     * @param linea4 La cuarta línea.
+     * @return `true` si las líneas forman un cuadrado, de lo contrario `false`.
+     */
     private boolean esCuadrado(Line2D.Double linea1, Line2D.Double linea2, Line2D.Double linea3, Line2D.Double linea4) {
 
         double longitud1 = linea1.getP1().distance(linea1.getP2());
@@ -755,7 +893,13 @@ public class GamePanel extends JPanel implements KeyListener {
     return(false);
     }
 
-    // Calcular el ángulo entre dos vectores
+    /**
+     * Calcula el ángulo entre dos líneas.
+     *
+     * @param linea1 La primera línea.
+     * @param linea2 La segunda línea.
+     * @return El ángulo en grados entre las dos líneas.
+     */
     private double calcularAnguloEntreLineas(Line2D.Double linea1, Line2D.Double linea2) {
         // Obtener los ángulos de ambas líneas utilizando la función Math.atan2
         double angulo1 = Math.atan2(linea1.getY2() - linea1.getY1(), linea1.getX2() - linea1.getX1());
@@ -777,6 +921,13 @@ public class GamePanel extends JPanel implements KeyListener {
         // Devolver el valor absoluto de la diferencia de ángulos
         return Math.abs(diferenciaAngulos);
     }
+
+    /**
+     * Obtiene el número de intersecciones únicas entre un conjunto de líneas.
+     *
+     * @param lines Un conjunto de líneas.
+     * @return El número de intersecciones únicas entre las líneas.
+     */    
     private int getIntersectionsCount(Line2D.Double... lines) {
         // Contar el número de intersecciones únicas entre las líneas
         Set<Point2D.Double> intersections = new HashSet<>();
@@ -810,6 +961,9 @@ public class GamePanel extends JPanel implements KeyListener {
     
         return intersections.size();
     }
+    /**
+     * Detiene la aplicación y sale del programa.
+     */
     public static void parartodo() {
             System.exit(0);    
     }
